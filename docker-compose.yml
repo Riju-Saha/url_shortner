@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+
+    depends_on:
+      - backend
+
+    networks:
+      - url_network
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "5000:5000"
+
+    depends_on:
+      - mysql
+
+    networks:
+      - url_network
+
+  mysql:
+    image: mysql:latest
+    container_name: url-mysql
+
+    environment:
+      MYSQL_DATABASE: urlshortener
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - url_volume:/var/lib/mysql
+      - ./backend/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+    networks:
+      - url_network
+
+volumes:
+  url_volume:
+
+networks:
+  url_network:
