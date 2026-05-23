@@ -27,8 +27,9 @@ services:
       - url_network
 
   mysql:
-    image: mysql:latest
+    image: mysql:8.0
     container_name: url-mysql
+    restart: always
 
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -49,61 +50,3 @@ volumes:
 
 networks:
   url_network:
-
-
-# services:
-
-#   frontend:
-#     build:
-#       context: ./frontend
-
-#     container_name: url-frontend
-
-#     ports:
-#       - "3000:3000"
-
-#     depends_on:
-#       - backend
-
-#     networks:
-#       - url_network
-
-#   backend:
-#     build:
-#       context: ./backend
-
-#     container_name: url-backend
-
-#     ports:
-#       - "5000:5000"
-
-#     depends_on:
-#       - mysql
-
-#     networks:
-#       - url_network
-
-#   mysql:
-#     image: mysql:8
-
-#     container_name: url-mysql
-
-#     environment:
-#       MYSQL_ROOT_PASSWORD: rootpassword
-#       MYSQL_DATABASE: urlshortener
-
-#     ports:
-#       - "3306:3306"
-
-#     volumes:
-#       - url_volume:/var/lib/mysql
-#       - ./backend/schema.sql:/docker-entrypoint-initdb.d/schema.sql
-
-#     networks:
-#       - url_network
-
-# volumes:
-#   url_volume:
-
-# networks:
-#   url_network:
